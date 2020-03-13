@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterinsta/screens/feed_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -10,11 +11,9 @@ class _MainPageState extends State {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = [
+    FeedPage(),
     Container(
       //primaries : 머터리얼 컬러 리스트를 불러옴
-      color: Colors.primaries[0],
-    ),
-    Container(
       color: Colors.primaries[1],
     ),
     Container(
@@ -31,9 +30,6 @@ class _MainPageState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('20억짜리 앱'),
-      ),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions,
