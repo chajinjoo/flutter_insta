@@ -20,6 +20,7 @@ class _MainPageState extends State {
 //        //primaries : 머터리얼 컬러 리스트를 불러옴
 //        color: Colors.primaries[1]),
     SearchPage(),
+    Container(color: Colors.primaries[2]),
     Container(color: Colors.primaries[3]),
     ProfilePage(),
   ];
