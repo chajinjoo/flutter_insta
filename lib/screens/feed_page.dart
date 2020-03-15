@@ -23,13 +23,13 @@ class FeedPage extends StatelessWidget {
         ),
         //앱바 오른쪽 아이콘
         actions: <Widget>[
-          IconButton(
-            color: Colors.black,
-            onPressed: () {},
-            icon: ImageIcon(
-              AssetImage('assets/actionbar_camera.png'),
-            ),
-          ),
+//          IconButton(
+//            color: Colors.black,
+//            onPressed: () {},
+//            icon: ImageIcon(
+//              AssetImage('assets/actionbar_camera.png'),
+//            ),
+//          ),
           IconButton(
             color: Colors.black,
             onPressed: () {},
@@ -39,8 +39,13 @@ class FeedPage extends StatelessWidget {
           ),
         ],
       ),
+      //스크롤 가능한 바디부분
       body: ListView.builder(
+          //보일 아이템 갯수
           itemCount: 15,
+          //필수요소
+          //IndexedWidgetBuilder 각 행 작성을 담당 하는 유형의 함수.
+          //현재 컨텍스트와 항목 색인을 수신하고 표시하려면 Widget를 리턴해야한다.
           itemBuilder: (BuildContext context, int index) {
             return _postItem(index, context);
           }),
@@ -82,8 +87,10 @@ class FeedPage extends StatelessWidget {
           horizontal: common_gap, vertical: common_xs_gap),
       child: Comment(
         username: 'username $index',
-        caption: '오늘도 플러터로 빡코열코!!! 🔥 얼른 취뽀하즈아!!! \n버닝버닝!! 으아아ㅏ아아아아아ㅏㅏㅏ아!!!!',
+        caption: '오늘도 플러터로 빡코열코!!! 스벅가고싶다.... \n생크림카시테라랑 아아벤티뜨리샷...🥺',
+        //showProfile = true 면 caption 부분 프사랑 공백이 보임
 //        showProfile: true,
+        //현재시간
 //        dateTime: DateTime.now(),
       ),
     );
@@ -104,6 +111,7 @@ class FeedPage extends StatelessWidget {
   Row _postActions() {
     return Row(
       children: <Widget>[
+        //아이콘버튼을 내가 지정한 이미지아이콘으로 꾸밈
         IconButton(
           icon: ImageIcon(
             AssetImage('assets/heart_selected.png'),
@@ -164,10 +172,13 @@ class FeedPage extends StatelessWidget {
 
   //포스트 이미지
   CachedNetworkImage _postImage(int index) {
+    //Image.network('url') 을 사용해도 되지만 다른 페이지에 있다가 다시 돌아올때 처음부터 다시 이미지를 다운받으니,
+    //데이터 소비를 너무 많이해서 안좋다. CachedNetworkImage 캐싱을 사용하자!
     //라이브러리를 이용하여 캐싱 함 (이미 다운로드된 이미지를 제외하고 새로운 이미지만 로드해줌)
     return CachedNetworkImage(
       //이미지 위치
       imageUrl: 'https://picsum.photos/id/$index/200/200',
+      //기본 imageBuilder가 맘에 들지 않으면 직접 정의 가능
       imageBuilder: (BuildContext context, ImageProvider imageProvider) =>
           //자녀 위젯의 비율
           AspectRatio(
