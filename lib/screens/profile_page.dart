@@ -10,14 +10,40 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+//SingleTickerProviderStateMixin 는 AnimationController가 하나만 있을 때 사용
+//SingleTickerProviderStateMixin 클래스는 애니메이션을 처리하기 위한 헬퍼 클래스
+//상속에 포함시키지 않으면 탭바 컨트롤러를 생성할 수 없다.
+//mixin은 다중 상속에서 코드를 재사용하기 위한 한 가지 방법으로 with 키워드와 함께 사용
+class _ProfilePageState extends State<ProfilePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
   bool _menuOpened = false;
   double menuWidth;
-  int duration = 200;
+  int duration = 300;
   AlignmentGeometry tabAlign = Alignment.centerLeft;
   bool _tabIconGridSelected = true;
   double _gridMargin = 0;
   double _myImgGridMargin = size.width;
+
+  @override
+  //객체가 위젯 트리에 추가될 때 호출되는 함수. 즉, 그려지기 전에 컨트롤러 생성.
+  void initState() {
+    _animationController = AnimationController(
+      //여기서 this 는 상단에 생성한 오브젝트를 가리킨다
+      //vsync에 this 형태로 전달해야 애니메이션이 정상 처리된다.
+      vsync: this,
+      duration: Duration(milliseconds: duration),
+    );
+    super.initState();
+  }
+
+  @override
+  //initState 함수의 반대.
+  //위젯 트리에서 제거되기 전에 호출. 멤버로 갖고 있는 컨트롤러부터 제거.
+  //애니메이션 후 화면을 떠날때 쓸데없는 메모리 낭비를 방지하기위해 제거
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -286,8 +312,16 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         )),
         IconButton(
-          icon: Icon(Icons.menu),
+          icon: AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: _animationController,
+            semanticLabel: 'Show menu',
+          ),
           onPressed: () {
+            //메뉴가 열려있으면 reverse로 닫게끔 아니면 forward!
+            _menuOpened
+                ? _animationController.reverse()
+                : _animationController.forward();
             setState(() {
               //플로팅액션버튼 클릭하면 _menuOpened를 true 면 false 로~ false 면 true 로 바꿈
               _menuOpened = !_menuOpened;
