@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/screens/feed_page.dart';
+import 'package:flutterinsta/screens/profile_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -13,18 +14,11 @@ class _MainPageState extends State {
   static List<Widget> _widgetOptions = [
     FeedPage(),
     Container(
-      //primaries : 머터리얼 컬러 리스트를 불러옴
-      color: Colors.primaries[1],
-    ),
-    Container(
-      color: Colors.primaries[2],
-    ),
-    Container(
-      color: Colors.primaries[3],
-    ),
-    Container(
-      color: Colors.primaries[4],
-    ),
+        //primaries : 머터리얼 컬러 리스트를 불러옴
+        color: Colors.primaries[1]),
+    Container(color: Colors.primaries[2]),
+    Container(color: Colors.primaries[3]),
+    ProfilePage(),
   ];
 
   @override
