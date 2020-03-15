@@ -11,9 +11,10 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool _menuOpened = false;
-
   double menuWidth;
   int duration = 200;
+  AlignmentGeometry tabAlign = Alignment.centerLeft;
+  bool _tabIconGridSelected = true;
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +93,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         _username(),
                         _userBio(),
                         _editProfileBtn(),
+                        _getTabIconButtons,
+                        _getAnimatedSelectedBar,
                       ],
                     ),
                   ),
@@ -247,5 +250,71 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ],
     );
+  }
+
+  //탭 아이콘 2개짜리
+  Widget get _getTabIconButtons => Row(
+        children: <Widget>[
+          Expanded(
+            child: IconButton(
+              icon: ImageIcon(
+                AssetImage('assets/grid.png'),
+                //_tabIconGridSelected 가 true 면 black, 아니면 black26 을 줘라
+                color: _tabIconGridSelected ? Colors.black : Colors.black26,
+              ),
+              onPressed: () {
+                _setTab(true);
+              },
+            ),
+          ),
+          Expanded(
+            child: IconButton(
+              icon: ImageIcon(
+                AssetImage('assets/saved.png'),
+                size: 32,
+                color: _tabIconGridSelected ? Colors.black26 : Colors.black,
+              ),
+              onPressed: () {
+                _setTab(false);
+              },
+            ),
+          ),
+        ],
+      );
+
+  //아이콘 클릭시 하단 바 애니메이션
+  //AnimatedContainer : 안에 Duration은 필수
+  //안에있는 속성들이 변경될때마다 알아서 애니메이션을 만들어낸다.
+  Widget get _getAnimatedSelectedBar => AnimatedContainer(
+        alignment: tabAlign,
+        duration: Duration(milliseconds: 200),
+        //애니메이션 효과
+        curve: Curves.easeInOut,
+        color: Colors.transparent,
+        height: 1,
+        width: size.width,
+        //하단 바
+        child: Container(
+          height: 1,
+          width: size.width / 2,
+          color: Colors.black87,
+        ),
+      );
+
+  //하단 바 조건문
+  _setTab(bool tabLeft) {
+    setState(() {
+      if (tabLeft) {
+        //왼쪽 선택시,
+        //tabLeft 가 true 면 왼쪽으로
+        this.tabAlign = Alignment.centerLeft;
+        //_tabIconGridSelected 를 true 로 지정
+        this._tabIconGridSelected = true;
+        //아니면 오른쪽으로 _tabIconGridSelected = flase 로 지정
+      } else {
+        this.tabAlign = Alignment.centerRight;
+        this._tabIconGridSelected = false;
+      }
+    });
   }
 }
