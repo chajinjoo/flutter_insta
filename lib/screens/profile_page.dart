@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
 import 'package:flutterinsta/utils/profile_img_path.dart';
+import 'package:flutterinsta/widgets/profile_side_menu.dart';
 
 //Provider를 사용하니까 stl 위젯을 써도 되지만,
 //ProfilePage 에서는 애니메이션을 사용하기 때문에 stful 위젯을 사용해준다!
@@ -52,8 +53,8 @@ class _ProfilePageState extends State<ProfilePage>
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          _sideMenu(),
           _profile(),
+          _sideMenu(),
         ],
       ),
     );
@@ -78,15 +79,7 @@ class _ProfilePageState extends State<ProfilePage>
         //메뉴를 클릭했을때 해당 column 사이즈가 활성화된 화면 전체를 차지하게끔
         child: SizedBox(
           width: menuWidth,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              FlatButton(
-                onPressed: () {},
-                child: Text('chacha__dev'),
-              ),
-            ],
-          ),
+          child: ProfileSideMenu(),
         ),
       ),
     );
@@ -170,7 +163,7 @@ class _ProfilePageState extends State<ProfilePage>
         //각 자식 위젯들의 가로세로 비율 1:1
         childAspectRatio: 1,
         //리스트에 30개 아이템들을 만들어줌
-        children: List.generate(30, (index) => _gridImgItem(index)),
+        children: List.generate(1, (index) => _gridImgItem(index)),
       );
 
   //캐싱으로 이미지를 만들어줌

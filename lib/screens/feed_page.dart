@@ -72,7 +72,7 @@ class FeedPage extends StatelessWidget {
     return FlatButton(
       onPressed: () {},
       child: Text(
-        'show all 18 comments',
+        '댓글 15개 모두 보기',
         style: TextStyle(
           color: Colors.grey[600],
         ),
@@ -178,6 +178,21 @@ class FeedPage extends StatelessWidget {
     return CachedNetworkImage(
       //이미지 위치
       imageUrl: 'https://picsum.photos/id/$index/200/200',
+      //로딩표시
+      placeholder: (context, url) {
+        return Container(
+          //가로세로 사이즈 동일하게
+          width: size.width,
+          height: size.width,
+          child: Center(
+            child: SizedBox(
+              width: 30.0,
+              height: 30.0,
+              child: Image.asset('assets/loading_img.gif'),
+            ),
+          ),
+        );
+      },
       //기본 imageBuilder가 맘에 들지 않으면 직접 정의 가능
       imageBuilder: (BuildContext context, ImageProvider imageProvider) =>
           //자녀 위젯의 비율
