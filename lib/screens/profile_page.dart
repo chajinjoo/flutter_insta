@@ -11,16 +11,14 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool _menuOpened = false;
-  Size _size;
+
   double menuWidth;
   int duration = 200;
 
   @override
   Widget build(BuildContext context) {
-    //현재 앱 화면의 사이즈 값을 받아옴
-    _size = MediaQuery.of(context).size;
     //menuWidth = 현재 앱 화면의 사이즈를 1.5(3/2)로 나눈 값
-    menuWidth = _size.width / 1.5;
+    menuWidth = size.width / 1.5;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -43,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
       transform: Matrix4.translationValues(
           //메뉴가 열려있으면 기존 앱 사이즈에서 menuWidth 뺀 걸 보여주고,
           //아니면 기존 앱 사이즈 화면만 보여라
-          _menuOpened ? _size.width - menuWidth : _size.width,
+          _menuOpened ? size.width - menuWidth : size.width,
           0,
           0),
       child: SafeArea(

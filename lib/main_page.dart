@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterinsta/constants/size.dart';
 import 'package:flutterinsta/screens/feed_page.dart';
 import 'package:flutterinsta/screens/profile_page.dart';
 
@@ -23,6 +24,10 @@ class _MainPageState extends State {
 
   @override
   Widget build(BuildContext context) {
+    if (size == null) {
+      //현재 앱 화면의 사이즈 값을 받아옴
+      size = MediaQuery.of(context).size;
+    }
     return Scaffold(
       //위젯간의 이동을 편리하게 해줌 (예: 채널 변환을 하는 TV)
       //클릭될때마다 children에 묶인 위젯들로 화면 전환을 해줌
