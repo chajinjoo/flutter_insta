@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
+import 'package:flutterinsta/screens/camera_page.dart';
 import 'package:flutterinsta/screens/feed_page.dart';
 import 'package:flutterinsta/screens/profile_page.dart';
 import 'package:flutterinsta/screens/search_page.dart';
@@ -19,7 +20,6 @@ class _MainPageState extends State {
 //        //primaries : 머터리얼 컬러 리스트를 불러옴
 //        color: Colors.primaries[1]),
     SearchPage(),
-    Container(color: Colors.primaries[2]),
     Container(color: Colors.primaries[3]),
     ProfilePage(),
   ];
@@ -90,9 +90,23 @@ class _MainPageState extends State {
   }
 
   void _onItemTapped(int index) {
-    //지금 State(변수) 즉, 상태가 변경됬으니 변수들에 맞춰 레이아웃을 다시 디스플레이해라!
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 2) {
+      openCamera(context);
+    } else {
+      //지금 State(변수) 즉, 상태가 변경됬으니 변수들에 맞춰 레이아웃을 다시 디스플레이해라!
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
+
+  //카메라 화면으로 가는 라우터 추가
+  openCamera(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CameraPage(),
+      ),
+    );
   }
 }
