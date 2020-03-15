@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
 import 'package:flutterinsta/utils/profile_img_path.dart';
@@ -15,6 +16,8 @@ class _ProfilePageState extends State<ProfilePage> {
   int duration = 200;
   AlignmentGeometry tabAlign = Alignment.centerLeft;
   bool _tabIconGridSelected = true;
+  double _gridMargin = 0;
+  double _myImgGridMargin = size.width;
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
+                  _getImageGrid(context),
                 ],
               ),
             ),
@@ -106,6 +110,48 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  SliverToBoxAdapter _getImageGrid(BuildContext context) =>
+      //슬리버가 아닌 위젯을 슬리버로 바꿔줌
+      SliverToBoxAdapter(
+        child: Stack(
+          children: <Widget>[
+            AnimatedContainer(
+              transform: Matrix4.translationValues(_gridMargin, 0, 0),
+              duration: Duration(milliseconds: duration),
+              curve: Curves.easeInOut,
+              child: _imageGrid,
+            ),
+            AnimatedContainer(
+              transform: Matrix4.translationValues(_myImgGridMargin, 0, 0),
+              duration: Duration(milliseconds: duration),
+              curve: Curves.easeInOut,
+              child: _imageGrid,
+            ),
+          ],
+        ),
+      );
+
+  GridView get _imageGrid => GridView.count(
+        //수직 스크롤 리스트 안에 또 스크롤 리스트가 있어서, 스크롤이 중복되는게 원치 않을때 준다.
+        //해당 스크롤은 동작이 중지되고 커스텀스크롤뷰만 동작한다
+        physics: NeverScrollableScrollPhysics(),
+        //그리드뷰는 세로 길이가 안정해져있으니 아이템이 있는 만큼만 높이를 지정 (안해주면 에러남)
+        //해당 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함
+        shrinkWrap: true,
+        //가로의 아이템 갯수
+        crossAxisCount: 3,
+        //각 자식 위젯들의 가로세로 비율 1:1
+        childAspectRatio: 1,
+        //리스트에 30개 아이템들을 만들어줌
+        children: List.generate(30, (index) => _gridImgItem(index)),
+      );
+
+  //캐싱으로 이미지를 만들어줌
+  CachedNetworkImage _gridImgItem(int index) => CachedNetworkImage(
+        fit: BoxFit.cover,
+        imageUrl: 'https://picsum.photos/id/$index/100/100',
+      );
 
   //프로필 수정 버튼
   Padding _editProfileBtn() {
@@ -287,7 +333,7 @@ class _ProfilePageState extends State<ProfilePage> {
   //안에있는 속성들이 변경될때마다 알아서 애니메이션을 만들어낸다.
   Widget get _getAnimatedSelectedBar => AnimatedContainer(
         alignment: tabAlign,
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: duration),
         //애니메이션 효과
         curve: Curves.easeInOut,
         color: Colors.transparent,
@@ -310,10 +356,17 @@ class _ProfilePageState extends State<ProfilePage> {
         this.tabAlign = Alignment.centerLeft;
         //_tabIconGridSelected 를 true 로 지정
         this._tabIconGridSelected = true;
+        this._gridMargin = 0;
+        //화면의 가로 길이만큼
+        this._myImgGridMargin = size.width;
         //아니면 오른쪽으로 _tabIconGridSelected = flase 로 지정
       } else {
         this.tabAlign = Alignment.centerRight;
         this._tabIconGridSelected = false;
+        //오른쪽 선택이니까 왼쪽으로 가야해서 - 마이너스 줌
+        this._gridMargin = -size.width;
+        //0 줘서 화면에서 보이게끔
+        this._myImgGridMargin = 0;
       }
     });
   }
