@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
 import 'package:flutterinsta/main_page.dart';
 import 'package:flutterinsta/utils/simple_snack_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -90,10 +91,7 @@ class _SignInFormState extends State<SignInForm> {
                 onPressed: () {
                   //유효성 검증이 완벽히 되면 파이어베이스에 던져줌
                   if (_formKey.currentState.validate()) {
-                    final route =
-                        MaterialPageRoute(builder: (context) => MainPage());
-                    //이전 경로는 스택에서 사라지고 이동할 경로만 남는다
-                    Navigator.pushReplacement(context, route);
+                    _login;
                   }
                 },
                 child: Text(
@@ -149,6 +147,18 @@ class _SignInFormState extends State<SignInForm> {
         ),
       ),
     );
+  }
+
+  get _login async {
+    final AuthResult result = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+            email: _emailController.text, password: _pwController.text);
+
+    final FirebaseUser user = result.user;
+
+    if (user == null) {
+      simpleSnackbar(context, 'Please try again later!');
+    }
   }
 
   InputDecoration getTextFieldDecor(String hint) {

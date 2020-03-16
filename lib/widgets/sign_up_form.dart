@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
 import 'package:flutterinsta/main_page.dart';
@@ -99,14 +100,11 @@ class _SignUpFormState extends State<SignUpForm> {
                 onPressed: () {
                   //유효성 검증이 완벽히 되면 파이어베이스에 던져줌
                   if (_formKey.currentState.validate()) {
-                    final route =
-                        MaterialPageRoute(builder: (context) => MainPage());
-                    //이전 경로는 스택에서 사라지고 이동할 경로만 남는다
-                    Navigator.pushReplacement(context, route);
+                    _register;
                   }
                 },
                 child: Text(
-                  '가입하기',
+                  '회원가입',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 color: Colors.blue,
@@ -158,6 +156,22 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
       ),
     );
+  }
+
+  get _register async {
+    final AuthResult result =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: _emailController.text,
+      password: _pwController.text,
+    );
+
+    //유저 확인
+    final FirebaseUser user = result.user;
+
+    //유저가 null 이면 스낵바로 에러 던짐
+    if (user == null) {
+      simpleSnackbar(context, 'please try again later!');
+    }
   }
 
   InputDecoration getTextFieldDecor(String hint) {
