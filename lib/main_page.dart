@@ -30,6 +30,8 @@ class _MainPageState extends State {
   Widget build(BuildContext context) {
     if (size == null) {
       //현재 앱 화면의 사이즈 값을 받아옴
+      //내가 만든 앱이 모든 기기 화면에 최적화 되도록,
+      //MediaQuery 를 이용하여 해당 기기의 사이즈를 갖고와서 size 에 다시 할당해준다.
       size = MediaQuery.of(context).size;
     }
     return Scaffold(
