@@ -10,11 +10,6 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //창의 아래쪽 삽입을 피하기 위해 자식 크기를 조정해야하는지 여부
-      //예를 들어, 스캐 폴드 위에 온 스크린 키보드가 표시되는 경우,
-      //키보드가 겹치지 않도록 본체 크기를 조정할 수 있으므로 본체 내부의 위젯이 키보드에 의해 가려지지 않음.
-      //기본값은 true이며 null 일 수 없음
-      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: <Widget>[

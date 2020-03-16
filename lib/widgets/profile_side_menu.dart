@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
+import 'package:flutterinsta/screens/signin_page.dart';
 
 class ProfileSideMenu extends StatelessWidget {
   @override
@@ -33,7 +34,12 @@ class ProfileSideMenu extends StatelessWidget {
           ),
           //아이콘이랑 텍스트가 둘다 들어갈 수 있음
           FlatButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              final route =
+                  MaterialPageRoute(builder: (context) => SignInPage());
+              //이전 경로는 스택에서 사라지고 이동할 경로만 남는다
+              Navigator.pushReplacement(context, route);
+            },
             icon: Icon(Icons.exit_to_app),
             label: Text(
               '로그아웃',

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
 import 'package:flutterinsta/utils/profile_img_path.dart';
 import 'package:flutterinsta/widgets/comment.dart';
+import 'package:flutterinsta/widgets/my_progress_indicator.dart';
 
 class FeedPage extends StatelessWidget {
   @override
@@ -180,18 +181,7 @@ class FeedPage extends StatelessWidget {
       imageUrl: 'https://picsum.photos/id/$index/200/200',
       //로딩표시
       placeholder: (context, url) {
-        return Container(
-          //가로세로 사이즈 동일하게
-          width: size.width,
-          height: size.width,
-          child: Center(
-            child: SizedBox(
-              width: 30.0,
-              height: 30.0,
-              child: Image.asset('assets/loading_img.gif'),
-            ),
-          ),
-        );
+        return MyProgressIndicator();
       },
       //기본 imageBuilder가 맘에 들지 않으면 직접 정의 가능
       imageBuilder: (BuildContext context, ImageProvider imageProvider) =>

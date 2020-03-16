@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
+import 'package:flutterinsta/main_page.dart';
+import 'package:flutterinsta/utils/simple_snack_bar.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -33,32 +35,35 @@ class _SignInFormState extends State<SignInForm> {
         padding: EdgeInsets.all(common_gap),
         child: Form(
           key: _formKey,
-          child: Column(
-            //메인 공간을 다 차지하게끔하고, 가운데로 위치
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            //가로의 모든 자리를 차지한다
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
+            shrinkWrap: true,
             children: <Widget>[
               //위젯 사이 공간을 줌
-              Spacer(flex: 6),
+              SizedBox(height: common_s_gap),
               Image.asset('assets/insta_text_logo.png'),
-              Spacer(flex: 1),
+              SizedBox(height: common_xxxs_gap),
               TextFormField(
+                //커서색상
+                cursorColor: Colors.blue,
+                //커서두께
+                cursorWidth: 2,
                 controller: _emailController,
                 decoration: getTextFieldDecor('전화번호, 사용자 이름 또는 이메일'),
                 //유저가 입력한 것에 대한 유효성 검사
                 validator: (String value) {
                   //value가 비어있거나 @ 를 포함 안하고 있으면 에러 메세지 던지고,
                   if (value.isEmpty || !value.contains('@')) {
-                    return '잘못된 사용자 계정입니다. 이메일 주소를 다시 확인해주세요.';
+                    return '이메일 주소를 다시 확인해주세요.';
                   }
                   //아니면 그냥 null 값 던져서 에러없이 통과
                   return null;
                 },
               ),
-              Spacer(flex: 1),
+              SizedBox(height: common_xxxs_gap),
               TextFormField(
+                //비번 땡땡처리
+                obscureText: true,
+                cursorColor: Colors.blue,
                 controller: _pwController,
                 decoration: getTextFieldDecor('비밀번호'),
                 validator: (String value) {
@@ -70,7 +75,7 @@ class _SignInFormState extends State<SignInForm> {
                   return null;
                 },
               ),
-              Spacer(flex: 1),
+              SizedBox(height: common_xxxs_gap),
               Text(
                 '비밀번호를 잊으셨나요?',
                 textAlign: TextAlign.end,
@@ -79,22 +84,28 @@ class _SignInFormState extends State<SignInForm> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              Spacer(flex: 2),
+              SizedBox(height: common_xxs_gap),
               FlatButton(
+                padding: EdgeInsets.all(18),
                 onPressed: () {
                   //유효성 검증이 완벽히 되면 파이어베이스에 던져줌
-                  if (_formKey.currentState.validate()) {}
+                  if (_formKey.currentState.validate()) {
+                    final route =
+                        MaterialPageRoute(builder: (context) => MainPage());
+                    //이전 경로는 스택에서 사라지고 이동할 경로만 남는다
+                    Navigator.pushReplacement(context, route);
+                  }
                 },
                 child: Text(
                   '로그인',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 color: Colors.blue,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6)),
                 disabledColor: Colors.blue[100],
               ),
-              Spacer(flex: 2),
+              SizedBox(height: common_xxs_gap),
               //'또는' 구분선 부분
               Stack(
                 alignment: Alignment.center,
@@ -120,29 +131,25 @@ class _SignInFormState extends State<SignInForm> {
                   ),
                 ],
               ),
-              Spacer(flex: 2),
+              SizedBox(height: common_xxs_gap),
               FlatButton.icon(
                 textColor: Colors.blue,
                 onPressed: () {
                   simpleSnackbar(context, 'facebook preddes');
                 },
-                icon: ImageIcon(AssetImage('assets/icon/facebook.png')),
+                icon: ImageIcon(
+                  AssetImage('assets/icon/facebook.png'),
+                  size: 25,
+                ),
                 label: Text('Facebook으로 로그인'),
               ),
-              Spacer(flex: 2),
-              Spacer(flex: 6),
+              SizedBox(height: common_xxs_gap),
+              SizedBox(height: common_s_gap),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void simpleSnackbar(BuildContext context, String txt) {
-    final snackBar = SnackBar(
-      content: Text(txt),
-    );
-    Scaffold.of(context).showSnackBar(snackBar);
   }
 
   InputDecoration getTextFieldDecor(String hint) {
@@ -154,7 +161,7 @@ class _SignInFormState extends State<SignInForm> {
           color: Colors.grey[300],
           width: 1,
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(6),
       ),
       //포커스 됬을때 보더 모양
       focusedBorder: OutlineInputBorder(
@@ -162,7 +169,7 @@ class _SignInFormState extends State<SignInForm> {
           color: Colors.grey[300],
           width: 1,
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(6),
       ),
       //보더 안에 있는 백그라운드 컬러
       fillColor: Colors.grey[100],

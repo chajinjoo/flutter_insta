@@ -4,6 +4,7 @@ import 'package:flutterinsta/screens/camera_page.dart';
 import 'package:flutterinsta/screens/feed_page.dart';
 import 'package:flutterinsta/screens/profile_page.dart';
 import 'package:flutterinsta/screens/search_page.dart';
+import 'package:flutterinsta/widgets/my_progress_indicator.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _MainPageState extends State {
 //        color: Colors.primaries[1]),
     SearchPage(),
     Container(color: Colors.primaries[2]),
-    Container(color: Colors.primaries[3]),
+    MyProgressIndicator(progressSize: 200),
     ProfilePage(),
   ];
 
