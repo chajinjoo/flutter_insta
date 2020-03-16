@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterinsta/screens/signup_page.dart';
+import 'package:flutterinsta/utils/styles.dart';
 import 'package:flutterinsta/widgets/sign_in_form.dart';
 
 class SignInPage extends StatefulWidget {
@@ -34,15 +36,17 @@ class _SignInPageState extends State<SignInPage> {
       height: 40,
       child: FlatButton(
         shape: Border(top: BorderSide(color: Colors.grey[300])),
-        onPressed: () {},
+        onPressed: () {
+          final route = MaterialPageRoute(builder: (context) => SignUpPage());
+          Navigator.pushReplacement(context, route);
+        },
         child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
             children: <TextSpan>[
               TextSpan(
                 text: '계정이 없으신가요?',
-                style: TextStyle(
-                    fontWeight: FontWeight.w300, color: Colors.black54),
+                style: authTxtStyle,
               ),
               TextSpan(
                 text: '  가입하기',
