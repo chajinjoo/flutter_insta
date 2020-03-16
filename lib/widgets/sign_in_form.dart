@@ -39,9 +39,9 @@ class _SignInFormState extends State<SignInForm> {
             shrinkWrap: true,
             children: <Widget>[
               //위젯 사이 공간을 줌
-              SizedBox(height: common_s_gap),
+              SizedBox(height: 80),
               Image.asset('assets/insta_text_logo.png'),
-              SizedBox(height: common_xxxs_gap),
+              SizedBox(height: 20),
               TextFormField(
                 //커서색상
                 cursorColor: Colors.blue,
@@ -59,7 +59,7 @@ class _SignInFormState extends State<SignInForm> {
                   return null;
                 },
               ),
-              SizedBox(height: common_xxxs_gap),
+              SizedBox(height: 12),
               TextFormField(
                 //비번 땡땡처리
                 obscureText: true,
@@ -75,7 +75,7 @@ class _SignInFormState extends State<SignInForm> {
                   return null;
                 },
               ),
-              SizedBox(height: common_xxxs_gap),
+              SizedBox(height: 20),
               Text(
                 '비밀번호를 잊으셨나요?',
                 textAlign: TextAlign.end,
@@ -84,9 +84,9 @@ class _SignInFormState extends State<SignInForm> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(height: common_xxs_gap),
+              SizedBox(height: 20),
               FlatButton(
-                padding: EdgeInsets.all(18),
+                padding: EdgeInsets.all(15),
                 onPressed: () {
                   //유효성 검증이 완벽히 되면 파이어베이스에 던져줌
                   if (_formKey.currentState.validate()) {
@@ -105,7 +105,19 @@ class _SignInFormState extends State<SignInForm> {
                     borderRadius: BorderRadius.circular(6)),
                 disabledColor: Colors.blue[100],
               ),
-              SizedBox(height: common_xxs_gap),
+              SizedBox(height: 20),
+              FlatButton.icon(
+                textColor: Colors.blue,
+                onPressed: () {
+                  simpleSnackbar(context, 'facebook preddes');
+                },
+                icon: ImageIcon(
+                  AssetImage('assets/icon/facebook.png'),
+                  size: 25,
+                ),
+                label: Text('Facebook으로 로그인'),
+              ),
+              SizedBox(height: 30),
               //'또는' 구분선 부분
               Stack(
                 alignment: Alignment.center,
@@ -131,20 +143,7 @@ class _SignInFormState extends State<SignInForm> {
                   ),
                 ],
               ),
-              SizedBox(height: common_xxs_gap),
-              FlatButton.icon(
-                textColor: Colors.blue,
-                onPressed: () {
-                  simpleSnackbar(context, 'facebook preddes');
-                },
-                icon: ImageIcon(
-                  AssetImage('assets/icon/facebook.png'),
-                  size: 25,
-                ),
-                label: Text('Facebook으로 로그인'),
-              ),
-              SizedBox(height: common_xxs_gap),
-              SizedBox(height: common_s_gap),
+              SizedBox(height: 30),
             ],
           ),
         ),
