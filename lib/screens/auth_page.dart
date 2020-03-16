@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutterinsta/screens/signup_page.dart';
 import 'package:flutterinsta/utils/styles.dart';
 import 'package:flutterinsta/widgets/sign_in_form.dart';
+import 'package:flutterinsta/widgets/sign_up_form.dart';
 
-class SignInPage extends StatefulWidget {
+class AuthPage extends StatefulWidget {
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _AuthPageState createState() => _AuthPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _AuthPageState extends State<AuthPage> {
+  Widget currentWidget = SignInForm();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +22,11 @@ class _SignInPageState extends State<SignInPage> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            SignInForm(),
+            //기본적으로 새 위젯과 이전에 AnimatedSwitcher 에서 자식으로 설정 한 위젯간에 크로스 페이드를 수행하는 위젯
+            AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              child: currentWidget,
+            ),
             _goToSignUpPageBtn(context),
           ],
         ),
@@ -37,22 +43,27 @@ class _SignInPageState extends State<SignInPage> {
       child: FlatButton(
         shape: Border(top: BorderSide(color: Colors.grey[300])),
         onPressed: () {
-          final route = MaterialPageRoute(builder: (context) => SignUpPage());
-          Navigator.pushReplacement(context, route);
+          setState(() {
+            if (currentWidget is SignInForm) {
+              currentWidget = SignUpForm();
+            } else {
+              currentWidget = SignInForm();
+            }
+          });
         },
         child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
             children: <TextSpan>[
               TextSpan(
-                text: '계정이 없으신가요?',
-                style: authTxtStyle,
-              ),
+                  text: (currentWidget is SignInForm)
+                      ? '계정이 없으신가요?'
+                      : '계정이 있으신가요?',
+                  style: authTxtStyle),
               TextSpan(
-                text: '  가입하기',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.blue[600]),
-              ),
+                  text: (currentWidget is SignInForm) ? '  로그인' : '  가입하기',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.blue[600])),
             ],
           ),
         ),
