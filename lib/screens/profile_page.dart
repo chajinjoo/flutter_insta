@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
+import 'package:flutterinsta/data/provider/my_user_data.dart';
 import 'package:flutterinsta/utils/profile_img_path.dart';
 import 'package:flutterinsta/widgets/profile_side_menu.dart';
+import 'package:provider/provider.dart';
 
 //Provider를 사용하니까 stl 위젯을 써도 되지만,
 //ProfilePage 에서는 애니메이션을 사용하기 때문에 stful 위젯을 사용해준다!
@@ -210,9 +212,13 @@ class _ProfilePageState extends State<ProfilePage>
   Padding _username() {
     return Padding(
       padding: const EdgeInsets.only(left: common_gap),
-      child: Text(
-        '차차 😎',
-        style: TextStyle(fontWeight: FontWeight.bold),
+      child: Consumer<MyUserData>(
+        builder: (context, myUserData, child) {
+          return Text(
+            myUserData.data.username,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
+import 'package:flutterinsta/firebase/firestore_provider.dart';
 import 'package:flutterinsta/utils/profile_img_path.dart';
 import 'package:flutterinsta/widgets/comment.dart';
 import 'package:flutterinsta/widgets/my_progress_indicator.dart';
@@ -13,7 +14,11 @@ class FeedPage extends StatelessWidget {
         //앱바 왼쪽 아이콘
         leading: IconButton(
           color: Colors.black,
-          onPressed: () {},
+          onPressed: () {
+//            firestoreProvider.sendData().then((_) {
+//              print('파이어스토어에 데이터가 보내졌다!');
+//            });
+          },
           icon: ImageIcon(
             AssetImage('assets/actionbar_camera.png'),
           ),
@@ -33,7 +38,10 @@ class FeedPage extends StatelessWidget {
 //          ),
           IconButton(
             color: Colors.black,
-            onPressed: () {},
+            //데이터 갖고오기
+            onPressed: () {
+//              firestoreProvider.getData();
+            },
             icon: ImageIcon(
               AssetImage('assets/direct_message.png'),
             ),
