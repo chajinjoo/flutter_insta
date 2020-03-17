@@ -1,10 +1,13 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterinsta/constants/size.dart';
+import 'package:flutterinsta/data/provider/my_user_data.dart';
 import 'package:flutterinsta/screens/camera_page.dart';
 import 'package:flutterinsta/screens/feed_page.dart';
 import 'package:flutterinsta/screens/profile_page.dart';
 import 'package:flutterinsta/screens/search_page.dart';
 import 'package:flutterinsta/widgets/my_progress_indicator.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -105,11 +108,17 @@ class _MainPageState extends State {
   }
 
   //카메라 화면으로 가는 라우터 추가
-  openCamera(BuildContext context) {
+  openCamera(BuildContext context) async {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CameraPage(),
+        builder: (context) => CameraPage(
+          camera: firstCamera,
+          user: Provider.of<MyUserData>(context).data,
+        ),
       ),
     );
   }
